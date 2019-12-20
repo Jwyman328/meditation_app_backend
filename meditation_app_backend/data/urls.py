@@ -20,6 +20,7 @@ from . import views
 urlpatterns = [
     path('all_meditation_courses/', views.getAllMeditationCourses.as_view(), name='all_meditation_courses'),
     path('course_meditations/<int:course_id>/',views.getAllMeditations.as_view(), name='all_meditations_for_course' ),
-    path('course_meditations/favorited', views.getFavoritedMeditationCourses.as_view(), name = 'favorited_Meditation_Courses')
+    path('course_meditations/favorited', views.getFavoritedMeditationCourses.as_view(), name = 'favorited_Meditation_Courses'),
+    path('course_meditations/filtered', views.getCatagoryMeditationCourses.as_view(), name='filtered_courses'),
 
 ]
