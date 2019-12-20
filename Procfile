@@ -1,1 +1,0 @@
-web: gunicorn meditation_app_backend/meditation_app_backend.wsgi --log-file -
