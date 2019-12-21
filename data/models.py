@@ -26,6 +26,7 @@ class AudioMeditation(models.Model):
     author = models.CharField(max_length=150)
     # uri:  require('../audio/CapableChange.mp3'),
     image_source = models.TextField()
+    audio_uri = models.TextField(blank=True,null=True, default=None)
     course = models.ForeignKey(MeditationCourse,blank=True,null=True,  on_delete=models.CASCADE)
 
 
