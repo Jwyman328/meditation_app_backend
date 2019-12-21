@@ -7,16 +7,10 @@ verify_ssl = true
 
 [packages]
 gunicorn = "*"
-django-auto-one-to-one = "*"
-django-bootstrap4 = "*"
-django-crispy-forms = "*"
 django = "*"
-chromedriver = "*"
-django-selenium-login = "*"
-whitenoise = "*"
-psycopg2-binary = "*"
 django-heroku = "*"
-dj-database-url = "*"
+psycopg2-binary = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.7"
