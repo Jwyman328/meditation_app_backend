@@ -6,12 +6,17 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-django = "*"
-djangorestframework = "*"
-django-cors-headers = "*"
 gunicorn = "*"
+django-auto-one-to-one = "*"
+django-bootstrap4 = "*"
+django-crispy-forms = "*"
+django = "*"
+chromedriver = "*"
+django-selenium-login = "*"
+whitenoise = "*"
+psycopg2-binary = "*"
 django-heroku = "*"
-psycopg2 = "*"
+dj-database-url = "*"
 
 [requires]
 python_version = "3.7"
