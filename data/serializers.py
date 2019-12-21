@@ -10,7 +10,7 @@ class MeditationCourseSerializer(serializers.ModelSerializer):
 
 
 class AudioMeditationSerializer(serializers.ModelSerializer):
-
+ 
     class Meta:
         model = AudioMeditation
         fields = "__all__"
