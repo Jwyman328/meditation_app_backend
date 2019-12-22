@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 class MeditationCatagoryType(models.Model):
     name = models.CharField(max_length=150)
 
+    def __str__(self):
+        return self.name
+
 class UserCatagories(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     filter_meditation_type_catagories = models.ManyToManyField(MeditationCatagoryType)
@@ -17,7 +20,9 @@ class MeditationCourse(models.Model):
     image_uri = models.TextField()
     catagories = models.ManyToManyField(MeditationCatagoryType)
     favorited_by = models.ManyToManyField(User,  blank=True, related_name='user_favourite')
-
+    
+    def __str__(self):
+        return self.title
 
 class AudioMeditation(models.Model):
     orderNumber = models.PositiveIntegerField()
