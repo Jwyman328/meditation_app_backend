@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'data',
     'rest_framework',
+    'rest_framework_jwt',
     'corsheaders',
 
 ]
@@ -56,11 +57,24 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 REST_FRAMEWORK = {
-   
-'DEFAULT_PERMISSION_CLASSES': [
-   'rest_framework.permissions.AllowAny',
-]
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+        #'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_VERIFY_EXPIRATION': False,
+    'JWT_ALLOW_REFRESH': True,
+
 }
 
 ROOT_URLCONF = 'meditation_app_backend.urls'
@@ -91,7 +105,15 @@ DATABASES = {
 
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
+         'NAME': 'test',                      # Or path to database file if using sqlite3.
+                  # Set to empty string for default. Not used with sqlite3.
+     
     }}
+
+    #'default': {
+               #'ENGINE': 'django.db.backends.sqlite3',
+                #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    #}}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

@@ -20,3 +20,46 @@ class UserCatagorySerializer(serializers.ModelSerializer):
     class Meta:
         model = UserCatagories
         fields = "__all__"
+
+
+class sign_up_serializer(serializers.ModelSerializer):
+    """Create a new user and return associated jwt token.
+    The password and username will be validated only for length.
+    
+    Keyword Arguments
+    -----------------
+    password: password takenfrom the users post when signing up
+    token: JWT token created for new user
+    Methods
+    ------------
+    get_token:
+        Create a unique JWT token for the user to use with thier requests.
+    create:
+        create a User object if username and password validated.
+    """
+    password = serializers.CharField(write_only=True)
+    token = serializers.SerializerMethodField()
+
+    def get_token(self, user):
+        """Create a unique JWT token for the user to use with thier requests."""
+
+        jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+        jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+        payload = jwt_payload_handler(user)
+        token = jwt_encode_handler(payload)
+        return token
+
+    def create(self, validated_data):
+        """create a User object if username and password validated."""
+        username = validated_data['username']
+        password = validated_data['password']
+
+        if len(username) > 5 and len(password) > 5:
+            newUser = User.objects.create_user(**validated_data) # username=username,password=password
+            return newUser
+        else:
+            return 'error' # not a valid error will need changing 
+
+    class Meta:
+        model = User
+        fields = ('token','username', 'password' )

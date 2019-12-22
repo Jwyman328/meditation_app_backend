@@ -5,6 +5,7 @@ from .models import MeditationCourse, AudioMeditation, UserCatagories, Meditatio
 
 from .serializers import MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer
 from rest_framework import status
+from rest_framework.permissions import AllowAny
 
 
 # Create your views here.
@@ -44,5 +45,19 @@ class getCatagoryMeditationCourses(views.APIView):
 
 
 
+class sign_up_user(APIView):
+    """Create a new user with passed username and password."""
+
+    # allow anyone to access the ability to make a user
+    permission_classes = [AllowAny]
+
+    def post(self,request):
+        username_password = request.data 
+        serialized_data = sign_up_serializer(data = username_password)
+        if serialized_data.is_valid():
+            serialized_data.save()
+            return Response(serialized_data.data,status.HTTP_201_CREATED)
+        else:
+            return Response('error', status.HTTP_400_BAD_REQUEST)
 
 

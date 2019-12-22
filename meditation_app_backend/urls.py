@@ -15,8 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework_jwt.views import obtain_jwt_token
+from data.views import sign_up_user
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('sign_in', obtain_jwt_token, name='login'),
+    path('sign_up', sign_up_user.as_view(), name='sign_up'),
     path('', include('data.urls'))
 ]
