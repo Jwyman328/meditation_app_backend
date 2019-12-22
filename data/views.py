@@ -45,7 +45,7 @@ class getCatagoryMeditationCourses(views.APIView):
 
 
 
-class sign_up_user(APIView):
+class sign_up_user(views.APIView):
     """Create a new user with passed username and password."""
 
     # allow anyone to access the ability to make a user
