@@ -3,7 +3,7 @@ from rest_framework import views
 from rest_framework.response import Response
 from .models import MeditationCourse, AudioMeditation, UserCatagories, MeditationCatagoryType
 
-from .serializers import MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer
+from .serializers import MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 
