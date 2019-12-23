@@ -40,8 +40,15 @@ class addFavoritedMeditationCourses(views.APIView):
     def get(self, request,course_id):
         user = request.user
         user_id = user.id
-        course_to_favorite = MeditationCourse.objects.get(course_id)
-        print(course_to_favorite.favorited_by, 'heat')
+        #course_to_favorite = MeditationCourse.objects.get(course_id)
+        #print(course_to_favorite.favorited_by, 'heat')
+        
+        course_to_favorite = MeditationCourse.objects.filter(id=course_id)
+        new_favorite_list = course_to_favorite[0].favorited_by.add(user)
+        course_to_favorite[0].save()
+        #(course_to_favorite[0].favorited_by.values_list(flat=True), 'heat')
+
+        #my_favorites_ids = my_favorites 
         #my_favorites_ids = my_favorites 
         #serialized_data = addFavoriteMeditationCourseSerializer(my_query, many=True).data
         return Response('hello', status.HTTP_200_OK)
