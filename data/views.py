@@ -46,7 +46,7 @@ class addFavoritedMeditationCourses(views.APIView):
         ## check if it is already in it and then remove it if it is 
         
         course_to_favorite = MeditationCourse.objects.filter(id=course_id)
-        if course_id in course_to_favorite[0].favorited_by.values_list(flat=True):
+        if user_id in course_to_favorite[0].favorited_by.values_list(flat=True):
             new_favorite_list = course_to_favorite[0].favorited_by.remove(user)
             course_to_favorite[0].save()
         else:
