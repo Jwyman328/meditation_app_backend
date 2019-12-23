@@ -56,8 +56,11 @@ class addFavoritedMeditationCourses(views.APIView):
 
         #my_favorites_ids = my_favorites 
         #my_favorites_ids = my_favorites 
+        my_query = MeditationCourse.objects.filter(favorited_by = user_id)
+        serialized_data = MeditationCourseSerializer(my_query, many=True).data
+        return Response(serialized_data, status.HTTP_200_OK)
         #serialized_data = addFavoriteMeditationCourseSerializer(my_query, many=True).data
-        return Response('hello', status.HTTP_200_OK)
+        
 
 class getCatagoryMeditationCourses(views.APIView):
     # get the UserCatagories that has to do with this user 
