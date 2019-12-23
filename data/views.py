@@ -37,7 +37,7 @@ class addFavoritedMeditationCourses(views.APIView):
     # first i need the course, so the course id
     # then i need to add to the favorited by this user
     # so one way is get the list of favorited by then add this user
-    def post(self, request,course_id):
+    def get(self, request,course_id):
         user = request.user
         user_id = user.id
         course_to_favorite = MeditationCourse.objects.get(course_id)
