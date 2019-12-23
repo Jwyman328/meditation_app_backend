@@ -16,6 +16,7 @@ class AudioMeditationSerializer(serializers.ModelSerializer):
     class Meta:
         model = AudioMeditation
         fields = "__all__"
+    
 
 class UserCatagorySerializer(serializers.ModelSerializer):
 

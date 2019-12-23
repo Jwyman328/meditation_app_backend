@@ -33,6 +33,19 @@ class getFavoritedMeditationCourses(views.APIView):
         serialized_data = MeditationCourseSerializer(my_query, many=True).data
         return Response(serialized_data, status.HTTP_200_OK)
 
+class addFavoritedMeditationCourses(views.APIView):
+    # first i need the course, so the course id
+    # then i need to add to the favorited by this user
+    # so one way is get the list of favorited by then add this user
+    def post(self, request,course_id):
+        user = request.user
+        user_id = user.id
+        course_to_favorite = MeditationCourse.objects.get(course_id)
+        print(course_to_favorite.favorited_by, 'heat')
+        #my_favorites_ids = my_favorites 
+        #serialized_data = addFavoriteMeditationCourseSerializer(my_query, many=True).data
+        return Response('hello', status.HTTP_200_OK)
+
 class getCatagoryMeditationCourses(views.APIView):
     # get the UserCatagories that has to do with this user 
     ## then get the cataogires from that 
