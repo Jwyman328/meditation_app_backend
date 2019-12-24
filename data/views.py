@@ -11,6 +11,7 @@ from rest_framework.permissions import AllowAny
 # Create your views here.
 
 class getAllMeditationCourses(views.APIView):
+    """Return all meditation Courses """
 
     def get(self, request):
         my_query = MeditationCourse.objects.all()
@@ -18,6 +19,12 @@ class getAllMeditationCourses(views.APIView):
         return Response(serialized_data, status.HTTP_200_OK)
 
 class getAllMeditations(views.APIView):
+    """Return an individual audio mediation requested by the course_id
+    
+    Keyword Arguments
+    -----------------
+    course_id -- the object if of the audio meditation wanted to be returned
+    """
 
     def get(self, request, course_id):
         my_query = AudioMeditation.objects.filter(course=course_id)
@@ -25,6 +32,7 @@ class getAllMeditations(views.APIView):
         return Response(serialized_data, status.HTTP_200_OK)
 
 class getFavoritedMeditationCourses(views.APIView):
+    """Return a list of meditation courses currently favorited by the current user """
 
     def get(self, request):
         user = request.user
@@ -34,9 +42,21 @@ class getFavoritedMeditationCourses(views.APIView):
         return Response(serialized_data, status.HTTP_200_OK)
 
 class addFavoritedMeditationCourses(views.APIView):
-    # first i need the course, so the course id
-    # then i need to add to the favorited by this user
-    # so one way is get the list of favorited by then add this user
+    """Add or remove the meditation course of the course_id for the current user
+    
+    If the current user is in the favorited_by list of this course_id 
+    when the http request is made, then remove the user from the favorited_by list.
+    If the current user is not in the favorited_by list of this course_id when 
+    the http request is made, then add the user to the favorited_by list.
+
+    In both cases return a list of all meditations favorited_by the current user
+
+    Keyword Arguments
+    -----------------
+    course_id -- the id of the audio_meditation course
+
+    """
+
     def get(self, request,course_id):
         user = request.user
         user_id = user.id
@@ -51,8 +71,6 @@ class addFavoritedMeditationCourses(views.APIView):
             course_to_favorite[0].save()
         #(course_to_favorite[0].favorited_by.values_list(flat=True), 'heat')
 
-        #my_favorites_ids = my_favorites 
-        #my_favorites_ids = my_favorites 
         my_query = MeditationCourse.objects.filter(favorited_by = user_id)
         serialized_data = MeditationCourseSerializer(my_query, many=True).data
         return Response(serialized_data, status.HTTP_200_OK)
@@ -60,8 +78,7 @@ class addFavoritedMeditationCourses(views.APIView):
         
 
 class getCatagoryMeditationCourses(views.APIView):
-    # get the UserCatagories that has to do with this user 
-    ## then get the cataogires from that 
+    """Currently unused """
 
     def get(self, request):
         user = request.user 
