@@ -4,17 +4,38 @@ from django.contrib.auth.models import User
 
 
 class MeditationCatagoryType(models.Model):
+    """Catagory type for meditations.
+    Example: Expert, Begginer, Anxiety
+
+    Keyword Arguments
+    -----------------
+    name -- name or title of the meditation catagory.
+
+    """
     name = models.CharField(max_length=150)
 
     def __str__(self):
         return self.name
 
 class UserCatagories(models.Model):
+    """ currently unused """
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     filter_meditation_type_catagories = models.ManyToManyField(MeditationCatagoryType)
 
 
 class MeditationCourse(models.Model):
+    """
+    The Meditation Course that contains meditations.
+
+
+    Keyword Arguments:
+    course_id -- the letter id for the course
+    title -- title of the meditation course
+    image_uri -- url link to a image for the course
+    catagories -- a list of MeditationCatagoryType models refering to this meditation course
+    favorited_by -- a list of users who currently have this course as a favorite course
+
+    """
     course_id = models.CharField(max_length=150)
     title = models.CharField(max_length=150)
     image_uri = models.TextField()
@@ -25,6 +46,20 @@ class MeditationCourse(models.Model):
         return self.title
 
 class AudioMeditation(models.Model):
+    """
+    Individual audio meditations
+
+    Keyword Arguments
+    -----------------
+    orderNumber -- the order of this meditation in it's meditation course
+    title -- the title of the meditation
+    time -- the amount of time in seconds of the length of the meditation
+    author -- the author of the meditation
+    image_source --X (currently unused)
+    audio_uri -- X (currently unused)
+    course -- the meditation course that this meditation is in
+
+     """
     orderNumber = models.PositiveIntegerField()
     title = models.CharField(max_length=150)
     time = models.PositiveIntegerField() #time representation in seconds

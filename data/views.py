@@ -40,9 +40,6 @@ class addFavoritedMeditationCourses(views.APIView):
     def get(self, request,course_id):
         user = request.user
         user_id = user.id
-        #course_to_favorite = MeditationCourse.objects.get(course_id)
-        #print(course_to_favorite.favorited_by, 'heat')
-        
         ## check if it is already in it and then remove it if it is 
         
         course_to_favorite = MeditationCourse.objects.filter(id=course_id)
@@ -71,7 +68,6 @@ class getCatagoryMeditationCourses(views.APIView):
         my_query =  UserCatagories.objects.filter(user=user)
         serialized_data = UserCatagorySerializer(my_query, many=True).data
         return Response(serialized_data, status.HTTP_200_OK)
-
 
 
 class sign_up_user(views.APIView):
