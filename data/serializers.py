@@ -9,7 +9,7 @@ class userAdditionsSerializer(serializers.ModelSerializer):
     """Serialize list of friends """
     class Meta:
         model = userAdditions
-        fields = ["friends"] # probably change to jsut username 
+        fields = "friends" # probably change to jsut username 
 
 
 class UserSerializer(serializers.ModelSerializer):
