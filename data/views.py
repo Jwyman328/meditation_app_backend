@@ -10,8 +10,32 @@ from rest_framework.permissions import AllowAny
 
 
 # Create your views here.
+class addRemoveFriend(views.APIView):
+    ##add a friend to friends list
+    def get(self, request,friend_user_id):
+        user = request.user
+        user_id = user.id
+        friend_user_object = User.objects.get(friend_user_id)
+        ## check if it is already in it and then remove it if it is 
+        
+        user_to_add_to_friends = userAdditions.objects.filter(id=user_id)
+        if friend_user_id in user_to_add_to_friends[0].friends.values_list(flat=True):
+            new_friends_list = user_to_add_to_friends[0].friends.remove(friend_user_object) # may need the friend user model not just id number
+            ##user_to_add_to_friends[0].save()  maybe use this 
+            new_friends_list.save()
+        else:
+            new_friends_list = user_to_add_to_friends[0].friends.add(friend_user_object)
+            user_to_add_to_friends[0].save()
+        #(course_to_favorite[0].favorited_by.values_list(flat=True), 'heat')
+
+        my_query = userAdditions.objects.filter(user=request.user)
+        serialized_data = userAdditionsSerializer(my_query, many=True).data
+        return Response(serialized_data, status.HTTP_200_OK)
+        #serialized_data = addFavoriteMeditationCourseSerializer(my_query, many=True).data
+        
+
 class getMyFriends(views.APIView):
-    "Return the entire database of users"
+    "Return a list of the user's friends"
 
     def get(self, request):
         my_query = userAdditions.objects.filter(user=request.user)
