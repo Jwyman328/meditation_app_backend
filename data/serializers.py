@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = "__all__" # probably change to jsut username 
+        fields = ["username",'first_name', 'last_name'] # probably change to jsut username 
 
 
 class MeditationCourseSerializer(serializers.ModelSerializer):
