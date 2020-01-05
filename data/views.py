@@ -15,7 +15,10 @@ class addRemoveFriend(views.APIView):
     def get(self, request,friend_user_id):
         user = request.user
         user_id = user.id
-        friend_user_object = User.objects.get(friend_user_id)
+        #friend_user_object = User.objects.get(int(friend_user_id))
+        friend_user_object = User.objects.filter(id = friend_user_id)
+        friend_user_object =friend_user_object[0]
+
         ## check if it is already in it and then remove it if it is 
         
         user_to_add_to_friends = userAdditions.objects.filter(id=user_id)
