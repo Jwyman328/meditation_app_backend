@@ -13,10 +13,18 @@ class userAdditionsSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    user_photo = serializers.SerializerMethodField()
+
+    def get_user_photo(self, obj):
+        "Return user photo"
+        this_obj_userAdditions = userAdditions.objects.filter(user = obj)
+        user_photo = this_obj_userAdditions[0].user_photo
+        return user_photo
+
 
     class Meta:
         model = User
-        fields = ["username",'first_name', 'last_name'] # probably change to jsut username 
+        fields = ["username",'first_name', 'last_name', 'user_photo'] # probably change to jsut username 
 
 
 class MeditationCourseSerializer(serializers.ModelSerializer):
