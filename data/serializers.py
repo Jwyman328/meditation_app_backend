@@ -1,9 +1,16 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import MeditationCatagoryType, MeditationCourse, AudioMeditation, MeditationCatagoryType, UserCatagories
+from .models import userAdditions, MeditationCatagoryType, MeditationCourse, AudioMeditation, MeditationCatagoryType, UserCatagories
 
 from rest_framework_jwt.settings import api_settings
 from django.contrib.auth.models import User
+
+class userAdditionsSerializer(serializers.ModelSerializer):
+    """Serialize list of friends """
+    class Meta:
+        model = userAdditions
+        fields = ["friends"] # probably change to jsut username 
+
 
 class UserSerializer(serializers.ModelSerializer):
 
