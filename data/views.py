@@ -44,7 +44,7 @@ class getMyFriends(views.APIView):
         my_query = userAdditions.objects.filter(user=request.user)
 
         #serialized_data = userAdditionsSerializer(my_query, many=True).data
-        serialized_data = UserSerializer(my_query.friends, many=True).data
+        serialized_data = UserSerializer(my_query[0].friends, many=True).data
 
         return Response(serialized_data, status.HTTP_200_OK)
 
