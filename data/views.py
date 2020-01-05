@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from .models import userAdditions, MeditationCourse, AudioMeditation, UserCatagories, MeditationCatagoryType
 from django.contrib.auth.models import User
 
-from .serializers import UserSerializer, MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
+from .serializers import userAdditionsSerializer, UserSerializer, MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 
