@@ -6,6 +6,7 @@ class userAdditions(models.Model):
     """A model that will represent the user model because we don't want to override it """
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     friends =  models.ManyToManyField(User,  blank=True, related_name='user_friends')
+    user_photo = models.TextField(blank=True, null=True) # url to photo here 
 
 class MeditationCatagoryType(models.Model):
     """Catagory type for meditations.
