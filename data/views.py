@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import views
 from rest_framework.response import Response
-from .models import MeditationCourse, AudioMeditation, UserCatagories, MeditationCatagoryType
+from .models import userAdditions, MeditationCourse, AudioMeditation, UserCatagories, MeditationCatagoryType
 from django.contrib.auth.models import User
 
 from .serializers import UserSerializer, MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
@@ -10,6 +10,14 @@ from rest_framework.permissions import AllowAny
 
 
 # Create your views here.
+class getMyFriends(views.APIView):
+    "Return the entire database of users"
+
+    def get(self, request):
+        my_query = userAdditions.objects.filter(user=request.user)
+        serialized_data = UserSerializer(my_query, many=True).data
+        return Response(serialized_data, status.HTTP_200_OK)
+
 class getAllUsers(views.APIView):
     "Return the entire database of users"
 
