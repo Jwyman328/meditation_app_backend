@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from .models import MeditationCourse, AudioMeditation, UserCatagories, MeditationCatagoryType
 from django.contrib.auth.models import User
 
-from .serializers import MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
+from .serializers import UserSerializer, MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 
@@ -15,7 +15,7 @@ class getAllUsers(views.APIView):
 
     def get(self, request):
         my_query = User.objects.all()
-        serialized_data = MeditationCourseSerializer(my_query, many=True).data
+        serialized_data = UserSerializer(my_query, many=True).data
         return Response(serialized_data, status.HTTP_200_OK)
 
 class getAllMeditationCourses(views.APIView):
