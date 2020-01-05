@@ -8,6 +8,9 @@ class userAdditions(models.Model):
     friends =  models.ManyToManyField(User,  blank=True, related_name='user_friends')
     user_photo = models.TextField(blank=True, null=True) # url to photo here 
 
+    def __str__(self):
+        return self.user.username
+
 class MeditationCatagoryType(models.Model):
     """Catagory type for meditations.
     Example: Expert, Begginer, Anxiety
