@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
     def get_user_photo(self, obj):
         "Return user photo"
         this_obj_userAdditions = userAdditions.objects.filter(user = obj)
-        user_photo = this_obj_userAdditions[0].user_photo
+        user_photo = this_obj_userAdditions.user_photo
         return user_photo
 
 
