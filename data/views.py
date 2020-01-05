@@ -24,8 +24,8 @@ class addRemoveFriend(views.APIView):
         user_to_add_to_friends = userAdditions.objects.filter(id=user_id)
         if friend_user_id in user_to_add_to_friends[0].friends.values_list(flat=True):
             new_friends_list = user_to_add_to_friends[0].friends.remove(friend_user_object) # may need the friend user model not just id number
-            ##user_to_add_to_friends[0].save()  maybe use this 
-            new_friends_list.save()
+            user_to_add_to_friends[0].save()  maybe use this 
+            ##new_friends_list.save()
         else:
             new_friends_list = user_to_add_to_friends[0].friends.add(friend_user_object)
             user_to_add_to_friends[0].save()
