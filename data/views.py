@@ -23,12 +23,12 @@ class acceptDenyFriendRequest(views.APIView):
             sender = pending_friend_request.sender
             #sender_id = pending_friend_request.sender.id
             senderUserAdditions = userAdditions.objects.filter(user = sender )
-            senderUserAdditions.friends.append(user)
-            senderUserAdditions.save()
+            senderUserAdditions[0].friends.append(user)
+            senderUserAdditions[0].save()
 
             userUserAdditions = userAdditions.objects.filter(user = user)
-            userUserAdditions.friends.append(sender)
-            userUserAdditions.save()
+            userUserAdditions[0].friends.append(sender)
+            userUserAdditions[0].save()
 
             return Response('updated', status.HTTP_200_OK)
         else:
