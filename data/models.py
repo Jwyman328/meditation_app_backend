@@ -8,7 +8,7 @@ class JournalEntry(models.Model):
 
 class FriendRequest(models.Model):
     sender = models.ForeignKey(User, related_name='user_sender', on_delete = models.CASCADE)
-    reciever = models.ForeignKey(User, on_delete = models.CASCADE)
+    reciever = models.ForeignKey(User, related_name='user_reciever', on_delete = models.CASCADE)
     status = models.BooleanField(default=False)
 
 
