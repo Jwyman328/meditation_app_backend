@@ -18,6 +18,17 @@ class acceptDenyFriendRequest(views.APIView):
         if bool(Bool):
             pending_friend_request.status= bool(Bool)
             pending_friend_request.save()
+
+            # add to both of their friend lists
+            sender = pending_friend_request.sender
+            #sender_id = pending_friend_request.sender.id
+            senderUserAdditions = userAdditions.filter(user = sender )
+            senderUserAdditions.friends.append(user)
+            senderUserAdditions.save()
+
+            userUserAdditions = userAdditions.filter(user = user)
+            senderUserAdditions.friends.append(sender)
+
             return Response('updated', status.HTTP_200_OK)
         else:
             # if the user rejects the request remove it from the friend requests 
