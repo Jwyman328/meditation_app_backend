@@ -25,6 +25,6 @@ urlpatterns = [
     path('course_meditations/filtered', views.getCatagoryMeditationCourses.as_view(), name='filtered_courses'),
     path('all_users', views.getAllUsers.as_view(), name = 'all_users'),
     path('user_friends', views.getMyFriends.as_view(), name='user_friends'),
-    path('friends/addRemoveFriend/<int:friend_user_id>/',views.addRemoveFriend.as_view(), name='add_remove_friend'),
+    path('friends/addRemoveFriend/<str:friend_user_name>/',views.addRemoveFriend.as_view(), name='add_remove_friend'),
 
 ]

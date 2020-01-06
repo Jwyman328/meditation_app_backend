@@ -12,11 +12,11 @@ from rest_framework.permissions import AllowAny
 # Create your views here.
 class addRemoveFriend(views.APIView):
     ##add a friend to friends list
-    def get(self, request,friend_user_id):
+    def get(self, request,friend_user_name):
         user = request.user
         user_id = user.id
         #friend_user_object = User.objects.get(int(friend_user_id))
-        friend_user_object = User.objects.filter(id = friend_user_id)
+        friend_user_object = User.objects.filter(username = friend_user_name)
         friend_user_object =friend_user_object[0]
 
         ## check if it is already in it and then remove it if it is 
