@@ -6,6 +6,11 @@ class JournalEntry(models.Model):
     text = models.TextField(blank=True, null=True)
     date = models.DateField()
 
+class FriendRequest(models.Model):
+    sender = models.ForeignKey(User, related_name='user_sender', on_delete = models.CASCADE)
+    reciever = models.ForeignKey(User, on_delete = models.CASCADE)
+    status = models.BooleanField(default=False)
+
 
 class userAdditions(models.Model):
     """A model that will represent the user model because we don't want to override it """
