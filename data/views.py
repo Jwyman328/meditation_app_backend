@@ -22,6 +22,8 @@ class acceptDenyFriendRequest(views.APIView):
         else:
             # if the user rejects the request remove it from the friend requests 
             pending_friend_request.delete()
+            return Response('updated', status.HTTP_200_OK)
+
 
 
 
