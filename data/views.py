@@ -10,6 +10,16 @@ from rest_framework.permissions import AllowAny
 
 
 # Create your views here.
+class pendingFriendRequests(views.APIView):
+    def get(self, request):
+        user = request.user
+        pending_friend_request = FriendRequest.objects.filter(reciever = user).filter(status=False)
+        serialized_data = friendRequestSerializer(pending_friend_request, many=True).data
+        return Response(serialized_data, status.HTTP_200_OK)
+
+
+
+
 class sendFriendRequest(views.APIView):
    
    def get(self,request, reciever_username):
