@@ -15,7 +15,7 @@ class acceptDenyFriendRequest(views.APIView):
         user = request.user
         pending_friend_request = FriendRequest.objects.get(id=id)
         
-        pending_friend_request(status=bool(Bool))
+        pending_friend_request.status= bool(Bool)
         pending_friend_request.save()
         return Response('updated', status.HTTP_200_OK)
 
