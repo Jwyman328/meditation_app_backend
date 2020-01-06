@@ -22,11 +22,11 @@ class acceptDenyFriendRequest(views.APIView):
             # add to both of their friend lists
             sender = pending_friend_request.sender
             #sender_id = pending_friend_request.sender.id
-            senderUserAdditions = userAdditions.filter(user = sender )
+            senderUserAdditions = userAdditions.objects.filter(user = sender )
             senderUserAdditions.friends.append(user)
             senderUserAdditions.save()
 
-            userUserAdditions = userAdditions.filter(user = user)
+            userUserAdditions = userAdditions.objects.filter(user = user)
             userUserAdditions.friends.append(sender)
             userUserAdditions.save()
 
