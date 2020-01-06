@@ -12,11 +12,27 @@ from rest_framework.permissions import AllowAny
 # Create your views here.
 class sendFriendRequest(views.APIView):
    
-    def get(self,request, reciever_username):
+   def get(self,request, reciever_username):
         user = request.user
         reciever = User.objects.filter(username = reciever_username)
         reciever = reciever[0]
         data = [user, reciever]
+        # check if the reicever is already this persons friend
+        this_user = userAdditions.objects.filter(user = user)
+        if reciever.id in this_user[0].friends.values_list(flat=True):
+            return Response('already your friend', status.HTTP_400_BAD_REQUEST)
+        else:
+            pass
+        
+        this_user_pending_request = FriendRequest.objects.filter(sender=user)
+        # check if user already has a pendign request to this person
+        for pending_request in  this_user_pending_request:
+            if pending_request.reciever == reciever:
+                return Response('you already sent this guy a friend request', status.HTTP_400_BAD_REQUEST)
+
+        else:
+            pass
+        
         newFriendRequest = FriendRequest.objects.create(sender=data[0],reciever=data[1] )
         newFriendRequest.save()
         serialized_data = friendRequestSerializer(newFriendRequest)
@@ -25,6 +41,7 @@ class sendFriendRequest(views.APIView):
             return Response(serialized_data.data,status.HTTP_201_CREATED)
         else:
             return Response('error', status.HTTP_400_BAD_REQUEST)
+
 
 class addRemoveFriend(views.APIView):
     ##add a friend to friends list
