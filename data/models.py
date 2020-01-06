@@ -1,6 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
+class JournalEntry(models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    text = models.TextField(blank=True, null=True)
+    date = models.DateField()
+
 
 class userAdditions(models.Model):
     """A model that will represent the user model because we don't want to override it """
