@@ -4,12 +4,27 @@ from rest_framework.response import Response
 from .models import userAdditions, MeditationCourse, AudioMeditation, UserCatagories, MeditationCatagoryType
 from django.contrib.auth.models import User
 
-from .serializers import userAdditionsSerializer, UserSerializer, MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
+from .serializers import friendRequestSerializer, userAdditionsSerializer, UserSerializer, MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 
 
 # Create your views here.
+class sendFriendRequest(views.APIView):
+   
+    def get(self,request, reciever_username):
+        user = request.user
+        reciever = User.objects.filter(username = reciever_username)
+        reciever = reciever[0]
+        data = [user, reciever]
+        serialized_data = friendRequestSerializer(data = data)
+        if serialized_data.is_valid():
+            serialized_data.save()
+            return Response(serialized_data.data,status.HTTP_201_CREATED)
+        else:
+            return Response('error', status.HTTP_400_BAD_REQUEST)
+
+
 class addRemoveFriend(views.APIView):
     ##add a friend to friends list
     def get(self, request,friend_user_name):

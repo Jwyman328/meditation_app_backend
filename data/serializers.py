@@ -1,9 +1,24 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import userAdditions, MeditationCatagoryType, MeditationCourse, AudioMeditation, MeditationCatagoryType, UserCatagories
+from .models import FriendRequest, userAdditions, MeditationCatagoryType, MeditationCourse, AudioMeditation, MeditationCatagoryType, UserCatagories
 
 from rest_framework_jwt.settings import api_settings
 from django.contrib.auth.models import User
+
+class friendRequestSerializer(serializers.ModelSerializer):
+
+    def create(self, validated_data):
+
+        if True:
+            newFriendRequest = FriendRequest.objects.create(sender=validated_data[0],reciever=validated_data[1] ) # username=username,password=password
+            return newFriendRequest
+        else:
+            return 'error' # not a valid error will need changing 
+
+    class Meta:
+        model = FriendRequest
+        fields =  "__all__"
+
 
 class userAdditionsSerializer(serializers.ModelSerializer):
     """Serialize list of friends """
