@@ -7,6 +7,14 @@ from django.contrib.auth.models import User
 
 class friendRequestSerializer(serializers.ModelSerializer):
 
+    sender_username = serializers.SerializerMethodField()
+
+     def get_sender_username(self, obj):
+        "Return sender username"
+
+        return obj.sender.username
+
+
     class Meta:
         model = FriendRequest
         fields =  "__all__"
