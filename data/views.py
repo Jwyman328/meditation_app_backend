@@ -18,6 +18,7 @@ class addRemoveFriend(views.APIView):
         #friend_user_object = User.objects.get(int(friend_user_id))
         friend_user_object = User.objects.filter(username = friend_user_name)
         friend_user_object =friend_user_object[0]
+        friend_user_id = friend_user_object.id
 
         ## check if it is already in it and then remove it if it is 
         
