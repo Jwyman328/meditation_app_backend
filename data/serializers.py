@@ -8,11 +8,19 @@ from django.contrib.auth.models import User
 class friendRequestSerializer(serializers.ModelSerializer):
 
     sender_username = serializers.SerializerMethodField()
+    sender_profile_picture = serializers.SerializerMethodField()
 
     def get_sender_username(self, obj):
         "Return sender username"
 
         return obj.sender.username
+
+    def get_sender_profile_picture(self, obj):
+        "Return sender username"
+        this_obj_userAdditions = userAdditions.objects.filter(user = obj.sender)
+        user_photo = this_obj_userAdditions[0].user_photo
+        return user_photo
+
 
 
     class Meta:
