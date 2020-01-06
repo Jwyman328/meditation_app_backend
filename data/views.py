@@ -29,7 +29,7 @@ class acceptDenyFriendRequest(views.APIView):
             userUserAdditions = userAdditions.objects.filter(user = user)
             newFriendList2 = userUserAdditions[0].friends.add(sender)
             userUserAdditions[0].save()
-
+            pending_friend_request.delete()
             return Response('updated', status.HTTP_200_OK)
         else:
             # if the user rejects the request remove it from the friend requests 
