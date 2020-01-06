@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import views
 from rest_framework.response import Response
-from .models import userAdditions, MeditationCourse, AudioMeditation, UserCatagories, MeditationCatagoryType
+from .models import FriendRequest, userAdditions, MeditationCourse, AudioMeditation, UserCatagories, MeditationCatagoryType
 from django.contrib.auth.models import User
 
 from .serializers import friendRequestSerializer, userAdditionsSerializer, UserSerializer, MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
@@ -17,13 +17,14 @@ class sendFriendRequest(views.APIView):
         reciever = User.objects.filter(username = reciever_username)
         reciever = reciever[0]
         data = [user, reciever]
-        serialized_data = friendRequestSerializer(data = data)
-        if serialized_data.is_valid():
-            serialized_data.save()
+        newFriendRequest = FriendRequest.objects.create(sender=data[0],reciever=data[1] )
+        newFriendRequest.save()
+        serialized_data = friendRequestSerializer(newFriendRequest)
+        if serialized_data:
+            print('in')
             return Response(serialized_data.data,status.HTTP_201_CREATED)
         else:
             return Response('error', status.HTTP_400_BAD_REQUEST)
-
 
 class addRemoveFriend(views.APIView):
     ##add a friend to friends list

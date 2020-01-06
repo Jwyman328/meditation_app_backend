@@ -7,14 +7,6 @@ from django.contrib.auth.models import User
 
 class friendRequestSerializer(serializers.ModelSerializer):
 
-    def create(self, validated_data):
-
-        if True:
-            newFriendRequest = FriendRequest.objects.create(sender=validated_data[0],reciever=validated_data[1] ) # username=username,password=password
-            return newFriendRequest
-        else:
-            return 'error' # not a valid error will need changing 
-
     class Meta:
         model = FriendRequest
         fields =  "__all__"
