@@ -28,5 +28,5 @@ urlpatterns = [
     path('friends/addRemoveFriend/<str:friend_user_name>/',views.addRemoveFriend.as_view(), name='add_remove_friend'),
     path('friends/sendFriendRequest/<str:reciever_username>/',views.sendFriendRequest.as_view(), name='send_friend_request'),
     path('friends/pending_friend_requests/', views.pendingFriendRequests.as_view(), name='pending_friend_requests'),
-
+    path('friends/<int:id>/<int:Bool>/', views.acceptDenyFriendRequest.as_view(), name = 'accept_deny_friend_request'),
 ]

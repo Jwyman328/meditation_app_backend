@@ -10,6 +10,17 @@ from rest_framework.permissions import AllowAny
 
 
 # Create your views here.
+class acceptDenyFriendRequest(views.APIView):
+    def get(self, request, id, Bool):
+        user = request.user
+        pending_friend_request = FriendRequest.objects.get(id=id)
+        
+        pending_friend_request(status=bool(Bool))
+        pending_friend_request.save()
+        return Response('updated', status.HTTP_200_OK)
+
+
+
 class pendingFriendRequests(views.APIView):
     def get(self, request):
         user = request.user
