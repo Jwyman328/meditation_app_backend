@@ -9,7 +9,7 @@ class friendRequestSerializer(serializers.ModelSerializer):
 
     sender_username = serializers.SerializerMethodField()
 
-     def get_sender_username(self, obj):
+    def get_sender_username(self, obj):
         "Return sender username"
 
         return obj.sender.username
