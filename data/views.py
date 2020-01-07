@@ -10,6 +10,23 @@ from rest_framework.permissions import AllowAny
 
 
 # Create your views here.
+
+class CreateMessage(views.APIView):
+
+    def post(self,request):
+
+
+        msg_username = request.data 
+        serialized_data = create_message_serializer(data = msg_username)
+        if serialized_data.is_valid():
+            serialized_data.save()
+            return Response(serialized_data.data,status.HTTP_201_CREATED)
+        else:
+            return Response('error', status.HTTP_400_BAD_REQUEST)
+
+
+
+
 class GetDirectMessageConversation(views.APIView):
     """Get the message history between the two """
     def get(self, request, reciever_username):
