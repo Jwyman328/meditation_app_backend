@@ -1,6 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
+class DirectMessage(models.Model):
+    sender_of_msg = models.ForeignKey(User, related_name='user_sender', on_delete = models.CASCADE)
+    reciever_of_msg = models.ForeignKey(User, related_name='user_reciever', on_delete = models.CASCADE)
+    time_sent = models.DateTimeField(auto_now=True)
+
 class JournalEntry(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     text = models.TextField(blank=True, null=True)

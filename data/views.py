@@ -1,15 +1,29 @@
 from django.shortcuts import render
 from rest_framework import views
 from rest_framework.response import Response
-from .models import FriendRequest, userAdditions, MeditationCourse, AudioMeditation, UserCatagories, MeditationCatagoryType
+from .models import DirectMessage, FriendRequest, userAdditions, MeditationCourse, AudioMeditation, UserCatagories, MeditationCatagoryType
 from django.contrib.auth.models import User
 
-from .serializers import friendRequestSerializer, userAdditionsSerializer, UserSerializer, MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
+from .serializers import DirectMessageSerializer, friendRequestSerializer, userAdditionsSerializer, UserSerializer, MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 
 
 # Create your views here.
+class GetDirectMessageConversation(views.APIView):
+    """Get the message history between the two """
+    def get(self, request, reciever_id):
+        user = request.user
+        reciever_obj = User.objects.get(reciever_id) #this could be from id or username
+
+        message_history = DirectMessage.objects.filter(sender=user).filter(reciever=reciever_obj)
+        messages_ordered = message_history.order_by('time_sent') # use '-time_sent' for reverse order
+
+        serialized_data = DirectMessageSerializer(pending_friend_request, many=True).data
+        return Response(serialized_data, status.HTTP_200_OK)
+        
+
+
 class acceptDenyFriendRequest(views.APIView):
     def get(self, request, id, Bool):
         user = request.user
@@ -29,7 +43,7 @@ class acceptDenyFriendRequest(views.APIView):
             userUserAdditions = userAdditions.objects.filter(user = user)
             newFriendList2 = userUserAdditions[0].friends.add(sender)
             userUserAdditions[0].save()
-            pending_friend_request.delete()
+            pending_friend_request.delete()  
             return Response('updated', status.HTTP_200_OK)
         else:
             # if the user rejects the request remove it from the friend requests 
