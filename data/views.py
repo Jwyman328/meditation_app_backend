@@ -12,17 +12,28 @@ from rest_framework.permissions import AllowAny
 # Create your views here.
 
 class CreateMessage(views.APIView):
+    """ post must be {
+        "msg":"message",
+        "reciever_username": "emnd"} """ 
 
     def post(self,request):
 
+        user = request.user
+        data = request.data 
+        data['user'] = user
 
-        msg_username = request.data 
-        serialized_data = create_message_serializer(data = msg_username)
-        if serialized_data.is_valid():
-            serialized_data.save()
-            return Response(serialized_data.data,status.HTTP_201_CREATED)
-        else:
-            return Response('error', status.HTTP_400_BAD_REQUEST)
+        message = data['msg']
+        reciever_username = data['reciever_username']
+        
+        reciever_obj = User.objects.filter(username = reciever_username) #this could be from id or username
+        reciever_obj = reciever_obj[0]
+
+        msg = DirectMessage.objects.create(sender_of_msg=user, reciever_of_msg=reciever_obj, msg=message)
+        msg.save()
+
+        return Response('message create', status.HTTP_201_CREATED)
+
+        
 
 
 
