@@ -12,9 +12,9 @@ from rest_framework.permissions import AllowAny
 # Create your views here.
 class GetDirectMessageConversation(views.APIView):
     """Get the message history between the two """
-    def get(self, request, reciever_id):
+    def get(self, request, reciever_username):
         user = request.user
-        reciever_obj = User.objects.filter(id = reciever_id) #this could be from id or username
+        reciever_obj = User.objects.filter(username = reciever_username) #this could be from id or username
         reciever_obj = reciever_obj[0]
 
         conversation_history_of_current_user = DirectMessage.objects.filter(sender_of_msg =user).filter(reciever_of_msg=reciever_obj)
