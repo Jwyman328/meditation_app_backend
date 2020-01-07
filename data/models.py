@@ -5,6 +5,7 @@ class DirectMessage(models.Model):
     sender_of_msg = models.ForeignKey(User, related_name='msg_sender', on_delete = models.CASCADE)
     reciever_of_msg = models.ForeignKey(User, related_name='msg_reciever', on_delete = models.CASCADE)
     time_sent = models.DateTimeField(auto_now=True)
+    msg = models.TextField(blank=True, null=True)
 
 class JournalEntry(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
