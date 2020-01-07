@@ -17,9 +17,11 @@ class GetDirectMessageConversation(views.APIView):
         reciever_obj = User.objects.get(reciever_id) #this could be from id or username
 
         message_history = DirectMessage.objects.filter(sender=user).filter(reciever=reciever_obj)
+        message_history_reverse = DirectMessage.objects.filter(sender=reciever_obj).filter(reciever=user)
+        message_history.extend(message_history_reverse)
         messages_ordered = message_history.order_by('time_sent') # use '-time_sent' for reverse order
 
-        serialized_data = DirectMessageSerializer(pending_friend_request, many=True).data
+        serialized_data = DirectMessageSerializer(messages_ordered, many=True).data
         return Response(serialized_data, status.HTTP_200_OK)
         
 
