@@ -14,16 +14,21 @@ class GetDirectMessageConversation(views.APIView):
     """Get the message history between the two """
     def get(self, request, reciever_id):
         user = request.user
-        reciever_obj = User.objects.get(reciever_id) #this could be from id or username
+        reciever_obj = User.objects.filter(id = reciever_id) #this could be from id or username
+        reciever_obj = reciever_obj[0]
 
-        message_history = DirectMessage.objects.filter(sender=user).filter(reciever=reciever_obj)
-        message_history_reverse = DirectMessage.objects.filter(sender=reciever_obj).filter(reciever=user)
-        message_history.extend(message_history_reverse)
-        messages_ordered = message_history.order_by('time_sent') # use '-time_sent' for reverse order
+        conversation_history_of_current_user = DirectMessage.objects.filter(sender_of_msg =user).filter(reciever_of_msg=reciever_obj)
 
-        serialized_data = DirectMessageSerializer(messages_ordered, many=True).data
+        conversation_history_of_reciever = DirectMessage.objects.filter(sender_of_msg=reciever_obj).filter(reciever_of_msg=user)
+        
+        full_conversation = conversation_history_of_current_user |  conversation_history_of_reciever
+        full_conversation_ordered = full_conversation.order_by('time_sent')
+
+        serialized_data = DirectMessageSerializer(full_conversation_ordered , many=True).data
+
         return Response(serialized_data, status.HTTP_200_OK)
         
+
 
 
 class acceptDenyFriendRequest(views.APIView):
