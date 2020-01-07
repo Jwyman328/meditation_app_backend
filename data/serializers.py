@@ -9,18 +9,18 @@ class CreateMessageSerializer(serializers.ModelSerializer):
  
  
  def create(self, validated_data):
-        """create a User object if username and password validated."""
-        message = validated_data['msg']
-        reciever_username = validated_data['reciever']
+    """create a User object if username and password validated."""
+    message = validated_data['msg']
+    reciever_username = validated_data['reciever']
 
-        reciever_obj = User.objects.filter(username = reciever_username) #this could be from id or username
-        reciever_obj = reciever_obj[0]
+    reciever_obj = User.objects.filter(username = reciever_username) #this could be from id or username
+    reciever_obj = reciever_obj[0]
 
-        if True:
-            newUser = DirectMessage.objects.create(**validated_data) # username=username,password=password
-            return newUser
-        else:
-            return 'error' # not a valid error will need changing 
+    if True:
+        newUser = DirectMessage.objects.create(**validated_data) # username=username,password=password
+        return newUser
+    else:
+        return 'error' # not a valid error will need changing 
 
     class Meta:
         model = User
