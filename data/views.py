@@ -21,8 +21,14 @@ class GetMyFeelings(views.APIView):
 
     def post(self, request):
         """ post must be {
-        "msg":"message",
-        "reciever_username": "emnd"} 
+   
+        "depressed": "1",
+        "anxious": "1",
+        "lost": "1",
+        "stressed": "1",
+        "excited": "1"
+      
+        }
         """ 
         user = request.user
         data = request.data
