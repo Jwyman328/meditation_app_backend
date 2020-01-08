@@ -28,10 +28,21 @@ class CreateMessageSerializer(serializers.ModelSerializer):
 
 
 class DirectMessageSerializer(serializers.ModelSerializer):
+  sender_username = serializers.SerializerMethodField()
+  reciever_username = serializers.SerializerMethodField()
+
+  def get_sender_username(self, obj):
+        "Return sender username"
+        return obj.sender_of_msg.username
+
+    def get_reciever_username(self, obj):
+        "Return sender username"
+        return obj.reciever_of_msg.username
 
   class Meta:
         model = DirectMessage
         fields =  "__all__"
+
 
 class friendRequestSerializer(serializers.ModelSerializer):
 
