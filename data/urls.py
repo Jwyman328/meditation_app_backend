@@ -31,5 +31,6 @@ urlpatterns = [
     path('friends/<int:id>/<int:Bool>/', views.acceptDenyFriendRequest.as_view(), name = 'accept_deny_friend_request'),
     path('friends/message_history/<str:reciever_username>/', views.GetDirectMessageConversation.as_view(), name = 'get_conversation'),
     path('friends/create_message/', views.CreateMessage.as_view(), name = 'create_message'),
+    path('personal/GetMyFeelings/', views.GetMyFeelings.as_view(), name = 'get_my_feelings'),
 
 ]

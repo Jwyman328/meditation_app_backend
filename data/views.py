@@ -1,15 +1,23 @@
 from django.shortcuts import render
 from rest_framework import views
 from rest_framework.response import Response
-from .models import DirectMessage, FriendRequest, userAdditions, MeditationCourse, AudioMeditation, UserCatagories, MeditationCatagoryType
+from .models import MyFeelings, DirectMessage, FriendRequest, userAdditions, MeditationCourse, AudioMeditation, UserCatagories, MeditationCatagoryType
 from django.contrib.auth.models import User
 
-from .serializers import DirectMessageSerializer, friendRequestSerializer, userAdditionsSerializer, UserSerializer, MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
+from .serializers import MyFeelingsSerializer, DirectMessageSerializer, friendRequestSerializer, userAdditionsSerializer, UserSerializer, MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 
 
 # Create your views here.
+
+class GetMyFeelings(views.APIView):
+
+    def get(self, request):
+        user = request.user
+        user_feelings = MyFeelings.objects.filter(user = user)
+        serialized_data = MyFeelingsSerializer(user_feelings, many=True).data
+        return Response(serialized_data, status.HTTP_200_OK)
 
 class CreateMessage(views.APIView):
     """ post must be {
