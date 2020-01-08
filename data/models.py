@@ -1,6 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
+class MyFeelings(models.Model):
+    depressed =  models.PositiveIntegerField(default=0)
+    anxious = models.PositiveIntegerField(default=0)
+    lost =  models.PositiveIntegerField(default=0)
+    stressed =  models.PositiveIntegerField(default=0)
+    excited =  models.PositiveIntegerField(default=0)
+
 class DirectMessage(models.Model):
     sender_of_msg = models.ForeignKey(User, related_name='msg_sender', on_delete = models.CASCADE)
     reciever_of_msg = models.ForeignKey(User, related_name='msg_reciever', on_delete = models.CASCADE)
