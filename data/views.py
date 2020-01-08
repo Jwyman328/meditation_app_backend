@@ -39,8 +39,13 @@ class GetMyFeelings(views.APIView):
         excited = data['excited']
 
         # delete old feelings obj 
+        
         user_feelings = MyFeelings.objects.filter(user = user)
-        user_feelings[0].delete()
+        if user_feelings:
+            user_feelings[0].delete()
+        else:
+            pass
+        
         newFeelingsObj = MyFeelings.objects.create(depressed=depressed , anxious=anxious,lost=lost ,
             stressed=stressed, excited=excited, user=user)
         newFeelingsObj.save()
