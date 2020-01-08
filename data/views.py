@@ -19,6 +19,30 @@ class GetMyFeelings(views.APIView):
         serialized_data = MyFeelingsSerializer(user_feelings, many=True).data
         return Response(serialized_data, status.HTTP_200_OK)
 
+    def post(self, request):
+         """ post must be {
+        "msg":"message",
+        "reciever_username": "emnd"} 
+        """ 
+        user = request.user
+        data = request.data
+        depressed=data['depressed']
+        anxious = data['anxious']
+        lost = data['lost']
+        stressed = data['stressed']
+        excited = data['excited']
+
+        # delete old feelings obj 
+        user_feelings = MyFeelings.objects.filter(user = user)
+        user_feelings[0].delete()
+        newFeelingsObj = MyFeelings.objects.create(depressed=depressed , anxious=anxious,lost=lost ,
+            stressed=stressed, excited=excited, user=user)
+        newFeelingsObj.save()
+
+        return Response('feelings updated', status.HTTP_201_CREATED)
+
+
+
 class CreateMessage(views.APIView):
     """ post must be {
         "msg":"message",
