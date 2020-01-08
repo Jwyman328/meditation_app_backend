@@ -20,7 +20,7 @@ class GetMyFeelings(views.APIView):
         return Response(serialized_data, status.HTTP_200_OK)
 
     def post(self, request):
-         """ post must be {
+        """ post must be {
         "msg":"message",
         "reciever_username": "emnd"} 
         """ 
