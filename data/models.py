@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 class MyFeelings(models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE, blank=True, null=True)
     depressed =  models.PositiveIntegerField(default=0)
     anxious = models.PositiveIntegerField(default=0)
     lost =  models.PositiveIntegerField(default=0)
