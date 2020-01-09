@@ -8,6 +8,7 @@ from .serializers import MyFeelingsSerializer, DirectMessageSerializer, friendRe
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 
+from django.core.mail import send_mail
 
 # Create your views here.
 
