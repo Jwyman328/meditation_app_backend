@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('sign_in', obtain_jwt_token, name='login'),
     path('sign_up', sign_up_user.as_view(), name='sign_up'),
-    path('', include('data.urls'))
+    path('', include('data.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
 
 ]
