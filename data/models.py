@@ -18,6 +18,7 @@ class DirectMessage(models.Model):
 class JournalEntry(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     text = models.TextField(blank=True, null=True)
+    mood = models.PositiveIntegerField(default=4)
     date = models.DateField()
 
 class FriendRequest(models.Model):
