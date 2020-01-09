@@ -6,7 +6,7 @@ from rest_framework_jwt.settings import api_settings
 from django.contrib.auth.models import User
 
 class MyFeelingsSerializer(serializers.ModelSerializer):
-    
+
      class Meta:
         model = MyFeelings
         fields =  "__all__"
@@ -150,6 +150,9 @@ class sign_up_serializer(serializers.ModelSerializer):
 
         if len(username) > 5 and len(password) > 5:
             newUser = User.objects.create_user(**validated_data) # username=username,password=password
+                        # make a user additions for this user 
+            new_user_additions = userAdditions.objects.create(user=newUser)
+            new_user_additions.save()
             return newUser
         else:
             return 'error' # not a valid error will need changing 
