@@ -151,6 +151,7 @@ class sign_up_serializer(serializers.ModelSerializer):
         if len(username) > 5 and len(password) > 5:
             newUser = User.objects.create_user(**validated_data) # username=username,password=password
                         # make a user additions for this user 
+            newUser.email = username
             new_user_additions = userAdditions.objects.create(user=newUser)
             new_user_additions.save()
             return newUser
@@ -160,3 +161,5 @@ class sign_up_serializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('token','username', 'password' )
+
+

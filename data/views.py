@@ -315,3 +315,25 @@ class sign_up_user(views.APIView):
             return Response('error', status.HTTP_400_BAD_REQUEST)
 
 
+class ResetPassWord(views.APIView):
+
+    permission_classes = [AllowAny]
+
+    def get(self, request, email):
+        #length = 13
+        #chars = string.ascii_letters + string.digits + '!@#$%^&*()'
+        #random.seed = (os.urandom(1024))
+        #new_password = ('tom'.join(random.choice(chars) for i in range(length)))
+
+        #user = userAdditions.objects.filter(email=email)
+        #user = user[0]
+       
+        msg = 'Click to start reset password process http://intense-gorge-29567.herokuapp.com/accounts/password_reset/' #+ new_password
+        
+        send_mail('New password Meditation App', msg, 'MeditationApp@dev.com', [email], fail_silently=False)
+        return Response('hi',status.HTTP_201_CREATED)
+
+
+
+
+

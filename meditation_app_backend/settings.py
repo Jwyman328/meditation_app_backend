@@ -155,6 +155,15 @@ USE_L10N = True
 
 USE_TZ = True
 
+EMAIL_HOST = 'smtp.sendgrid.net'
+#EMAIL_HOST_USER = 'postmaster@sandbox9bb3ed733d874a598c4b6508265726ef.mailgun.org'
+#EMAIL_HOST_PASSWORD = '47556917b5d7772b89a3cd4bdfb0e5a4-713d4f73-8e44839d'
+EMAIL_HOST_USER = 'jwyman328'
+EMAIL_HOST_PASSWORD = 'braves328'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
