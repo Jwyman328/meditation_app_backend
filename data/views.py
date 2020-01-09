@@ -45,7 +45,7 @@ class GetMyFeelings(views.APIView):
             user_feelings[0].delete()
         else:
             pass
-        
+
         newFeelingsObj = MyFeelings.objects.create(depressed=depressed , anxious=anxious,lost=lost ,
             stressed=stressed, excited=excited, user=user)
         newFeelingsObj.save()
@@ -308,6 +308,9 @@ class sign_up_user(views.APIView):
         username_password = request.data 
         serialized_data = sign_up_serializer(data = username_password)
         if serialized_data.is_valid():
+            # make a user additions for this user 
+            new_user_additions = userAdditions.objects.create(user=request.user, )
+            new_user_additions.save()
             serialized_data.save()
             return Response(serialized_data.data,status.HTTP_201_CREATED)
         else:
