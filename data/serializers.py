@@ -1,9 +1,15 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import MyFeelings, DirectMessage, FriendRequest, userAdditions, MeditationCatagoryType, MeditationCourse, AudioMeditation, MeditationCatagoryType, UserCatagories
+from .models import FitnessGoals, MyFeelings, DirectMessage, FriendRequest, userAdditions, MeditationCatagoryType, MeditationCourse, AudioMeditation, MeditationCatagoryType, UserCatagories
 
 from rest_framework_jwt.settings import api_settings
 from django.contrib.auth.models import User
+
+class FitnessGoalsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FitnessGoals
+        fields =  "__all__"
+
 
 class MyFeelingsSerializer(serializers.ModelSerializer):
 
