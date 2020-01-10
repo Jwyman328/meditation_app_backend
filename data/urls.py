@@ -34,6 +34,7 @@ urlpatterns = [
     path('personal/GetMyFeelings/', views.GetMyFeelings.as_view(), name = 'get_my_feelings'),
     path('resetPassword/<str:email>/', views.ResetPassWord.as_view(), name = 'resetPassword'),
     path('fitness/dailyStepGoal/', views.GetDailyStepGoal.as_view(), name = 'GetDailyStepGoal'),
+    path('fitness/changeDailyStepGoal/<int:newDailySteps>',views.ChangeDailyStepGoal.as_view(), name='ChangeDailyStepGoal'),
 
 
 
