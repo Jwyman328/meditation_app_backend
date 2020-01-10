@@ -12,6 +12,9 @@ admin.site.register(JournalEntry)
 admin.site.register(FriendRequest)
 admin.site.register(DirectMessage)
 admin.site.register(MyFeelings)
+admin.site.register(FitnessGoals)
+
+
 
 
 
