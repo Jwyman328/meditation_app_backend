@@ -14,11 +14,10 @@ from django.core.mail import send_mail
 class ChangeDailyStepGoal(views.APIView):
      def get(self, request, newDailySteps):
         user = request.user
+        user_fitness_goals = FitnessGoals.objects.filter(user = user).update(daily_step_goal=newDailySteps)
         user_fitness_goals = FitnessGoals.objects.filter(user = user)
-        user_fitness_goals[0].daily_step_goal = newDailySteps
-        user_fitness_goals[0].save()
         serialized_data = FitnessGoalsSerializer(user_fitness_goals,  many=True).data
-        return Response(serialized_data, status.HTTP_200_OK)
+        return Response('updated daily step goal', status.HTTP_200_OK)
 
 class GetDailyStepGoal(views.APIView):
 
