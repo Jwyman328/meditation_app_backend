@@ -17,7 +17,7 @@ class GetDailyStepGoal(views.APIView):
     def get(self, request):
         user = request.user
         user_fitness_goals = FitnessGoals.objects.filter(user = user)
-        serialized_data = FitnessGoalsSerializer(user_fitness_goals).data
+        serialized_data = FitnessGoalsSerializer(user_fitness_goals,  many=True).data
         return Response(serialized_data, status.HTTP_200_OK)
 
 
