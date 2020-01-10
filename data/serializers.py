@@ -109,7 +109,13 @@ class MeditationCourseSerializer(serializers.ModelSerializer):
 
 
 class AudioMeditationSerializer(serializers.ModelSerializer):
- 
+     meditation_course_photo = serializers.SerializerMethodField()
+
+    def get_user_photo(self, obj):
+        "Return user photo"
+        this_obj_meditation_course_image = obj.course.image_uri
+        return this_obj_meditation_course_image
+        
     class Meta:
         model = AudioMeditation
         fields = "__all__"
