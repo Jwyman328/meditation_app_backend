@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import MyFeelings, DirectMessage, FriendRequest, JournalEntry, AudioMeditation, MeditationCatagoryType, MeditationCourse, UserCatagories, userAdditions
+from .models import FitnessGoals, MyFeelings, DirectMessage, FriendRequest, JournalEntry, AudioMeditation, MeditationCatagoryType, MeditationCourse, UserCatagories, userAdditions
 
 admin.site.register(AudioMeditation)
 admin.site.register(MeditationCatagoryType)
