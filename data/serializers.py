@@ -25,7 +25,7 @@ class userJournalMoodSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = JournalEntry
-        fields =  ["get_moods_range"]
+        fields =  ["moods_range"]
 
 class userJournalSerializer(serializers.ModelSerializer):
 
