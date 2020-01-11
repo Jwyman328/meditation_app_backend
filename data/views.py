@@ -1,16 +1,29 @@
 from django.shortcuts import render
 from rest_framework import views
 from rest_framework.response import Response
-from .models import FitnessGoals, MyFeelings, DirectMessage, FriendRequest, userAdditions, MeditationCourse, AudioMeditation, UserCatagories, MeditationCatagoryType
+from .models import  JournalEntry, FitnessGoals, MyFeelings, DirectMessage, FriendRequest, userAdditions, MeditationCourse, AudioMeditation, UserCatagories, MeditationCatagoryType
 from django.contrib.auth.models import User
 
-from .serializers import FitnessGoalsSerializer, MyFeelingsSerializer, DirectMessageSerializer, friendRequestSerializer, userAdditionsSerializer, UserSerializer, MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
+from .serializers import userJournalSerializer, FitnessGoalsSerializer, MyFeelingsSerializer, DirectMessageSerializer, friendRequestSerializer, userAdditionsSerializer, UserSerializer, MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 
 from django.core.mail import send_mail
 
 # Create your views here.
+class JournalEntries(views.APIView):
+    # get all the users journal entries
+    def get(self, request):
+        user = request.user
+        userJournals = JournalEntry.objects.filter(user=user)
+        serialized_data = userJournalSerializer(userJournals,  many=True).data
+        return Response(serialized_data, status.HTTP_200_OK)
+        
+
+
+
+
+
 class ChangeDailyStepGoal(views.APIView):
      def get(self, request, newDailySteps):
         user = request.user
