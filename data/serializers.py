@@ -30,7 +30,7 @@ class userJournalMoodSerializer(serializers.ModelSerializer):
 
             
 
-            return [all_moods,all_moods_month]
+            return [all_moods,all_moods_month, [today,last_week,last_month ]]
 
     class Meta:
         model = JournalEntry
