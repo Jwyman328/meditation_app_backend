@@ -18,15 +18,9 @@ class JournalEntries(views.APIView):
         userJournals = JournalEntry.objects.filter(user=user)
         serialized_data = userJournalSerializer(userJournals,  many=True).data
         return Response(serialized_data, status.HTTP_200_OK)
-    
 
- 
 
     def post(self,request):
-         """ post must be {
-        "date":"yyyy-mm-dd format."
-        "text":"message",
-        "mood": "emnd"} """
         user = request.user
         data = request.data 
         text = data['text']
