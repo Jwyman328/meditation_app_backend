@@ -14,7 +14,7 @@ class userJournalMoodSerializer(serializers.ModelSerializer):
             "Return sender username"
             today = datetime.datetime.now()
             last_week = today - timedelta(days=7)
-            user = request.user
+            user = obj.user
             userJournals = JournalEntry.objects.filter(user=user).filter(date__gte = last_week )
             all_moods = []
 
