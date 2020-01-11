@@ -36,6 +36,7 @@ urlpatterns = [
     path('fitness/dailyStepGoal/', views.GetDailyStepGoal.as_view(), name = 'GetDailyStepGoal'),
     path('fitness/changeDailyStepGoal/<int:newDailySteps>',views.ChangeDailyStepGoal.as_view(), name='ChangeDailyStepGoal'),
     path('Journal/all_user_entries', views.JournalEntries.as_view(), name='JournalEntries'),
+    path('Journal/last_week_moods', views.MoodData.as_view(), name='last_week_moods'),
 
 
 

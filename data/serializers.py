@@ -4,9 +4,31 @@ from .models import JournalEntry, FitnessGoals, MyFeelings, DirectMessage, Frien
 
 from rest_framework_jwt.settings import api_settings
 from django.contrib.auth.models import User
+import datetime
+from datetime import timedelta
+
+class userJournalMoodSerializer(serializers.ModelSerializer):
+    moods_range = serializers.SerializerMethodField()
+
+    def get_moods_range(self, obj):
+            "Return sender username"
+            today = datetime.datetime.now()
+            last_week = today - timedelta(days=7)
+            user = request.user
+            userJournals = JournalEntry.objects.filter(user=user).filter(date__gte = last_week )
+            all_moods = []
+
+            for obj in userJournals:
+                all_moods.append(obj.mood)
+
+            return all_moods
+
+    class Meta:
+        model = JournalEntry
+        fields =  ["get_moods_range"]
 
 class userJournalSerializer(serializers.ModelSerializer):
-    
+
      class Meta:
         model = JournalEntry
         fields =  "__all__"

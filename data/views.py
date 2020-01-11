@@ -4,13 +4,31 @@ from rest_framework.response import Response
 from .models import  JournalEntry, FitnessGoals, MyFeelings, DirectMessage, FriendRequest, userAdditions, MeditationCourse, AudioMeditation, UserCatagories, MeditationCatagoryType
 from django.contrib.auth.models import User
 
-from .serializers import userJournalSerializer, FitnessGoalsSerializer, MyFeelingsSerializer, DirectMessageSerializer, friendRequestSerializer, userAdditionsSerializer, UserSerializer, MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
+from .serializers import userJournalMoodSerializer, userJournalSerializer, FitnessGoalsSerializer, MyFeelingsSerializer, DirectMessageSerializer, friendRequestSerializer, userAdditionsSerializer, UserSerializer, MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 
 from django.core.mail import send_mail
+import datetime
+from datetime import timedelta
+
 
 # Create your views here.
+
+class MoodData(views.APIView):
+    # get last 7 days, month or year 
+     def get(self, request,timeframe):
+        #timeframe is week, month, year
+        # todays date 
+        today = datetime.datetime.now()
+        last_week = today - timedelta(days=7)
+        user = request.user
+        userJournals = JournalEntry.objects.filter(user=user).filter(date__gte = last_week )
+        serialized_data = userJournalMoodSerializer(userJournals,  many=True).data
+        return Response(serialized_data, status.HTTP_200_OK)
+        
+
+
 class JournalEntries(views.APIView):
     # get all the users journal entries
     def get(self, request):
@@ -19,8 +37,9 @@ class JournalEntries(views.APIView):
         serialized_data = userJournalSerializer(userJournals,  many=True).data
         return Response(serialized_data, status.HTTP_200_OK)
 
-
     def post(self,request):
+        """  "text": "second entry", "mood": "2", "date": "2020-01-08" """
+
         user = request.user
         data = request.data 
         text = data['text']
