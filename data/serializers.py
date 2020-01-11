@@ -8,20 +8,29 @@ import datetime
 from datetime import timedelta
 
 class userJournalMoodSerializer(serializers.ModelSerializer):
-    moods_range = serializers.SerializerMethodField()
+    moods_range= serializers.SerializerMethodField()
 
     def get_moods_range(self, obj):
             "Return sender username"
             today = datetime.datetime.now()
             last_week = today - timedelta(days=7)
+            last_month = today - timedelta(days=30)
             user = obj.user
             userJournals = JournalEntry.objects.filter(user=user).filter(date__gte = last_week )
-            all_moods = []
+            userJournals_month = JournalEntry.objects.filter(user=user).filter(date__gte = last_month )
+
+            all_moods = [] # week
+            all_moods_month = []
 
             for obj in userJournals:
                 all_moods.append(obj.mood)
+            
+            for obj in userJournals_month:
+                all_moods_month.append(obj.mood)
 
-            return all_moods
+            
+
+            return [all_moods,all_moods_month]
 
     class Meta:
         model = JournalEntry
