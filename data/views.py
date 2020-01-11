@@ -23,8 +23,8 @@ class MoodData(views.APIView):
         today = datetime.datetime.now()
         last_week = today - timedelta(days=7)
         user = request.user
-        userJournals = JournalEntry.objects.filter(user=user)
-        serialized_data = userJournalMoodSerializer(userJournals[0],  many=True).data
+        userJournals = JournalEntry.objects.filter(user=user).filter(date__gte = last_week )
+        serialized_data = userJournalMoodSerializer(userJournals,  many=True).data
         return Response(serialized_data, status.HTTP_200_OK)
         
 
