@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 
+class audio_field_test(models.Model):
+    audi_body = models.FileField(upload_to='documents/')
+    
 class FitnessGoals(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE, blank=True, null=True)
     daily_step_goal = models.PositiveIntegerField(default=10000)
