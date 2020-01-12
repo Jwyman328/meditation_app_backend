@@ -7,8 +7,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Create your models here.
 
 class audio_field_test(models.Model):
-    file_path =  os.path.join(BASE_DIR, 'media/documents')
-    audi_body = models.FileField(upload_to='media/documents')
+    audi_body = models.FileField(upload_to='/documents')
     
 class FitnessGoals(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE, blank=True, null=True)
