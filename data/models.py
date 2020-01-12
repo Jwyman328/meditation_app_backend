@@ -7,7 +7,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Create your models here.
 
 class audio_field_test(models.Model):
-    audi_body = models.FileField(upload_to='/documents')
+    """currently can not store files on heroku you must put them locally and then push to heroku """
+    audi_body = models.FileField(upload_to='documents')
     
 class FitnessGoals(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE, blank=True, null=True)

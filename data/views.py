@@ -19,6 +19,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Create your views here.
 class ReturnAudio(views.APIView):
+    """ currently when i make this call i will get hte positive self mp3
+       eventually i would want to pass a url variable with the file name and then it would get that file"""
     def get(self, request):
         file_path =  os.path.join(BASE_DIR, 'media/documents/PositiveSelf.mp3')
        
