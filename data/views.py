@@ -11,6 +11,9 @@ from rest_framework.permissions import AllowAny
 from django.core.mail import send_mail
 import datetime
 from datetime import timedelta
+import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Create your views here.
