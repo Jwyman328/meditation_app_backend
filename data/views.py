@@ -14,6 +14,35 @@ from datetime import timedelta
 
 
 # Create your views here.
+class ReturnAudio(views.APIView):
+    def get(self, request):
+        file_path =  os.path.join(BASE_DIR, 'media/documents/PositiveSelf.mp3')
+       
+        FilePointer = open(file_path)
+        #response = HttpResponse(FilePointer,content_type='application/force-download' )
+        #response['Content-Disposition'] = 'attachment; filename=NameOfFile'
+        #Content-Disposition: attachment; filename="my-file.mp3"
+        #BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+        #settings
+        ## also make the tow folders, media/documents/ put in a file
+        #MEDIA_URL = '/media/'
+        #MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+
+        files = open(file_path, "rb").read() 
+        response = HttpResponse(files, content_type="audio/mpeg") 
+        response['Content-Disposition'] = 'attachment; filename=filename.mp3'  # this decides what the downloaded filename will be 
+        return response
+        #return response
+        #url
+        #path('ReturnAudio', views.ReturnAudio.as_view(), name='return_audio'),
+
+        #models
+        #class audio_field_test(models.Model):
+            #audi_body = models.FileField(upload_to='documents/')
+
 
 class MoodData(views.APIView):
     # get last 7 days, month or year 
