@@ -297,6 +297,22 @@ class getCatagoryMeditationCourses(views.APIView):
         serialized_data = UserCatagorySerializer(my_query, many=True).data
         return Response(serialized_data, status.HTTP_200_OK)
 
+class sign_up_additional_data(views.APIView):
+
+    def post(self,request):
+        firstName_lastName = request.data 
+        user = request.user 
+        my_query =  userAdditions.objects.filter(user=user)
+        this_user_additions = my_query[0]
+        this_user_additions.first_name = firstName_lastName['first_name']
+        this_user_additions.last_name = firstName_lastName['last_name']
+        this_user_additions.save()
+
+        if this_user_additions:
+            return Response('first name last name added',status.HTTP_201_CREATED)
+        else:
+            return Response('error', status.HTTP_400_BAD_REQUEST)
+
 
 class sign_up_user(views.APIView):
     """Create a new user with passed username and password."""
