@@ -389,6 +389,28 @@ class getCatagoryMeditationCourses(views.APIView):
         serialized_data = UserCatagorySerializer(my_query, many=True).data
         return Response(serialized_data, status.HTTP_200_OK)
 
+
+class sign_up_set_health_additional_data(views.APIView):
+
+    def post(self,request):
+        health_data = request.data 
+        user = request.user 
+        my_query =  userAdditions.objects.filter(user=user)
+        this_user_additions = my_query[0]
+        this_user_additions.weight = health_data['weight']
+        this_user_additions.height_feet = health_data['height']['feet']
+        this_user_additions.height_inches = health_data['height']['inch']
+        this_user_additions.gender = health_data['gender']
+        this_user_additions.birth_year = health_data['DOB']['year']
+        this_user_additions.birth_month = health_data['DOB']['month']
+        this_user_additions.save()
+
+        if this_user_additions:
+            return Response('health data for user added',status.HTTP_201_CREATED)
+        else:
+            return Response('error', status.HTTP_400_BAD_REQUEST)
+
+
 class sign_up_additional_data(views.APIView):
 
     def post(self,request):

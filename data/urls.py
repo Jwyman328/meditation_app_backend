@@ -39,5 +39,7 @@ urlpatterns = [
     path('Journal/last_week_moods/<str:timeframe>', views.MoodData.as_view(), name='last_week_moods'),
     path('ReturnAudio', views.ReturnAudio.as_view(), name='return_audio'),
     path('sign_up_additional_data', views.sign_up_additional_data.as_view(), name='sign_up_additional_data'),
+    path('sign_up_set_health_additional_data', views.sign_up_set_health_additional_data.as_view(), name='sign_up_set_health_additional_data'),
+    
 
 ]
