@@ -1,6 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
+import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 # Create your models here.
+
+class audio_field_test(models.Model):
+    """currently can not store files on heroku you must put them locally and then push to heroku """
+    audi_body = models.FileField(upload_to='documents')
+    
+class FitnessGoals(models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE, blank=True, null=True)
+    daily_step_goal = models.PositiveIntegerField(default=10000)
+
 class MyFeelings(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE, blank=True, null=True)
     depressed =  models.PositiveIntegerField(default=0)
@@ -18,7 +31,8 @@ class DirectMessage(models.Model):
 class JournalEntry(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     text = models.TextField(blank=True, null=True)
-    date = models.DateField()
+    mood = models.PositiveIntegerField(default=3)
+    date = models.DateField(blank=True, null=True)
 
 class FriendRequest(models.Model):
     sender = models.ForeignKey(User, related_name='user_sender', on_delete = models.CASCADE)

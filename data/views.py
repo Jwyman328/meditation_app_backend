@@ -1,15 +1,107 @@
 from django.shortcuts import render
 from rest_framework import views
 from rest_framework.response import Response
-from .models import MyFeelings, DirectMessage, FriendRequest, userAdditions, MeditationCourse, AudioMeditation, UserCatagories, MeditationCatagoryType
+from .models import  JournalEntry, FitnessGoals, MyFeelings, DirectMessage, FriendRequest, userAdditions, MeditationCourse, AudioMeditation, UserCatagories, MeditationCatagoryType
 from django.contrib.auth.models import User
 
-from .serializers import MyFeelingsSerializer, DirectMessageSerializer, friendRequestSerializer, userAdditionsSerializer, UserSerializer, MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
+from .serializers import userJournalMoodSerializer, userJournalSerializer, FitnessGoalsSerializer, MyFeelingsSerializer, DirectMessageSerializer, friendRequestSerializer, userAdditionsSerializer, UserSerializer, MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 
+from django.core.mail import send_mail
+import datetime
+from datetime import timedelta
+import os
+from django.http import HttpResponse
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 # Create your views here.
+class ReturnAudio(views.APIView):
+    """ currently when i make this call i will get hte positive self mp3
+       eventually i would want to pass a url variable with the file name and then it would get that file"""
+    def get(self, request):
+        file_path =  os.path.join(BASE_DIR, 'media/documents/PositiveSelf.mp3')
+       
+        FilePointer = open(file_path)
+        #response = HttpResponse(FilePointer,content_type='application/force-download' )
+        #response['Content-Disposition'] = 'attachment; filename=NameOfFile'
+        #Content-Disposition: attachment; filename="my-file.mp3"
+        #BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+        #settings
+        ## also make the tow folders, media/documents/ put in a file
+        #MEDIA_URL = '/media/'
+        #MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+
+        files = open(file_path, "rb").read() 
+        response = HttpResponse(files, content_type="audio/mpeg") 
+        response['Content-Disposition'] = 'attachment; filename=filename.mp3'  # this decides what the downloaded filename will be 
+        return response
+        #return response
+        #url
+        #path('ReturnAudio', views.ReturnAudio.as_view(), name='return_audio'),
+
+        #models
+        #class audio_field_test(models.Model):
+            #audi_body = models.FileField(upload_to='documents/')
+
+
+class MoodData(views.APIView):
+    # get last 7 days, month or year 
+     def get(self, request,timeframe):
+        #timeframe is week, month, year
+        # todays date 
+        today = datetime.datetime.now()
+        last_week = today - timedelta(days=7)
+        user = request.user
+        userJournals = JournalEntry.objects.filter(user=user).filter(date__gte = last_week )
+        serialized_data = userJournalMoodSerializer(userJournals,  many=True).data
+        return Response(serialized_data, status.HTTP_200_OK)
+        
+
+
+class JournalEntries(views.APIView):
+    # get all the users journal entries
+    def get(self, request):
+        user = request.user
+        userJournals = JournalEntry.objects.filter(user=user)
+        serialized_data = userJournalSerializer(userJournals,  many=True).data
+        return Response(serialized_data, status.HTTP_200_OK)
+
+    def post(self,request):
+        """  "text": "second entry", "mood": "2", "date": "2020-01-08" """
+
+        user = request.user
+        data = request.data 
+        text = data['text']
+        mood = data['mood']
+        date = data['date']
+
+        journalEntry = JournalEntry.objects.create(user=user, text=text, mood=mood, date = date)
+        journalEntry.save()
+
+        return Response('Journal created', status.HTTP_201_CREATED)
+
+class ChangeDailyStepGoal(views.APIView):
+     def get(self, request, newDailySteps):
+        user = request.user
+        user_fitness_goals = FitnessGoals.objects.filter(user = user).update(daily_step_goal=newDailySteps)
+        user_fitness_goals = FitnessGoals.objects.filter(user = user)
+        serialized_data = FitnessGoalsSerializer(user_fitness_goals,  many=True).data
+        return Response(serialized_data, status.HTTP_200_OK)
+
+class GetDailyStepGoal(views.APIView):
+
+    def get(self, request):
+        user = request.user
+        user_fitness_goals = FitnessGoals.objects.filter(user = user)
+        serialized_data = FitnessGoalsSerializer(user_fitness_goals,  many=True).data
+        return Response(serialized_data, status.HTTP_200_OK)
+
 
 class GetMyFeelings(views.APIView):
 
@@ -329,5 +421,27 @@ class sign_up_user(views.APIView):
             return Response(serialized_data.data,status.HTTP_201_CREATED)
         else:
             return Response('error', status.HTTP_400_BAD_REQUEST)
+
+
+class ResetPassWord(views.APIView):
+
+    permission_classes = [AllowAny]
+
+    def get(self, request, email):
+        #length = 13
+        #chars = string.ascii_letters + string.digits + '!@#$%^&*()'
+        #random.seed = (os.urandom(1024))
+        #new_password = ('tom'.join(random.choice(chars) for i in range(length)))
+
+        #user = userAdditions.objects.filter(email=email)
+        #user = user[0]
+       
+        msg = 'Click to start reset password process http://intense-gorge-29567.herokuapp.com/accounts/password_reset/' #+ new_password
+        
+        send_mail('New password Meditation App', msg, 'MeditationApp@dev.com', [email], fail_silently=False)
+        return Response('hi',status.HTTP_201_CREATED)
+
+
+
 
 

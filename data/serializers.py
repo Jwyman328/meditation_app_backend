@@ -1,9 +1,53 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import MyFeelings, DirectMessage, FriendRequest, userAdditions, MeditationCatagoryType, MeditationCourse, AudioMeditation, MeditationCatagoryType, UserCatagories
+from .models import JournalEntry, FitnessGoals, MyFeelings, DirectMessage, FriendRequest, userAdditions, MeditationCatagoryType, MeditationCourse, AudioMeditation, MeditationCatagoryType, UserCatagories
 
 from rest_framework_jwt.settings import api_settings
 from django.contrib.auth.models import User
+import datetime
+from datetime import timedelta
+
+class userJournalMoodSerializer(serializers.ModelSerializer):
+    moods_range= serializers.SerializerMethodField()
+
+    def get_moods_range(self, obj):
+            "Return sender username"
+            today = datetime.datetime.now()
+            last_week = today - timedelta(days=7)
+            last_month = today - timedelta(days=30)
+            user = obj.user
+            userJournals = JournalEntry.objects.filter(user=user).filter(date__gte = last_week )
+            userJournals_month = JournalEntry.objects.filter(user=user).filter(date__gte = last_month )
+
+            all_moods = [] # week
+            all_moods_month = []
+
+            for obj in userJournals:
+                all_moods.append(obj.mood)
+            
+            for obj in userJournals_month:
+                all_moods_month.append(obj.mood)
+
+            
+
+            return [all_moods,all_moods_month, [today,last_week,last_month ]]
+
+    class Meta:
+        model = JournalEntry
+        fields =  ["moods_range"]
+
+class userJournalSerializer(serializers.ModelSerializer):
+
+     class Meta:
+        model = JournalEntry
+        fields =  "__all__"
+
+
+class FitnessGoalsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FitnessGoals
+        fields =  "__all__"
+
 
 class MyFeelingsSerializer(serializers.ModelSerializer):
 
@@ -103,7 +147,13 @@ class MeditationCourseSerializer(serializers.ModelSerializer):
 
 
 class AudioMeditationSerializer(serializers.ModelSerializer):
- 
+    meditation_course_photo = serializers.SerializerMethodField()
+
+    def get_meditation_course_photo(self, obj):
+        "Return user photo"
+        this_obj_meditation_course_image = obj.course.image_uri
+        return this_obj_meditation_course_image
+
     class Meta:
         model = AudioMeditation
         fields = "__all__"
@@ -149,8 +199,9 @@ class sign_up_serializer(serializers.ModelSerializer):
         password = validated_data['password']
 
         if len(username) > 5 and len(password) > 5:
-            newUser = User.objects.create_user(**validated_data) # username=username,password=password
+            newUser = User.objects.create_user(email = username, **validated_data) # username=username,password=password
                         # make a user additions for this user 
+          
             new_user_additions = userAdditions.objects.create(user=newUser)
             new_user_additions.save()
             return newUser
@@ -160,3 +211,5 @@ class sign_up_serializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('token','username', 'password' )
+
+
