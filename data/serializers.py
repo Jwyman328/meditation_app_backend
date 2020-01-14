@@ -110,12 +110,16 @@ class friendRequestSerializer(serializers.ModelSerializer):
         user_photo = this_obj_userAdditions[0].user_photo
         return user_photo
 
-
-
     class Meta:
         model = FriendRequest
         fields =  "__all__"
 
+class userAdditionsSerializerProfileData(serializers.ModelSerializer):
+
+     class Meta:
+        model = userAdditions
+        fields = ["first_name", "last_name","weight", "height_feet", "height_inches", 
+            "gender","birth_year", "birth_month" ] # probably change to jsut username 
 
 class userAdditionsSerializer(serializers.ModelSerializer):
     """Serialize list of friends """

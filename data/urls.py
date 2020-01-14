@@ -40,6 +40,6 @@ urlpatterns = [
     path('ReturnAudio', views.ReturnAudio.as_view(), name='return_audio'),
     path('sign_up_additional_data', views.sign_up_additional_data.as_view(), name='sign_up_additional_data'),
     path('sign_up_set_health_additional_data', views.sign_up_set_health_additional_data.as_view(), name='sign_up_set_health_additional_data'),
-    
+    path('get_profile_additional_data', views.get_profile_additional_data.as_view(), name="get_profile_additional_data"),
 
 ]

@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from .models import  JournalEntry, FitnessGoals, MyFeelings, DirectMessage, FriendRequest, userAdditions, MeditationCourse, AudioMeditation, UserCatagories, MeditationCatagoryType
 from django.contrib.auth.models import User
 
-from .serializers import userJournalMoodSerializer, userJournalSerializer, FitnessGoalsSerializer, MyFeelingsSerializer, DirectMessageSerializer, friendRequestSerializer, userAdditionsSerializer, UserSerializer, MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
+from .serializers import userAdditionsSerializerProfileData, userJournalMoodSerializer, userJournalSerializer, FitnessGoalsSerializer, MyFeelingsSerializer, DirectMessageSerializer, friendRequestSerializer, userAdditionsSerializer, UserSerializer, MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 
@@ -179,7 +179,6 @@ class GetDirectMessageConversation(views.APIView):
         user = request.user
         reciever_obj = User.objects.filter(username = reciever_username) #this could be from id or username
         reciever_obj = reciever_obj[0]
-
         conversation_history_of_current_user = DirectMessage.objects.filter(sender_of_msg =user).filter(reciever_of_msg=reciever_obj)
 
         conversation_history_of_reciever = DirectMessage.objects.filter(sender_of_msg=reciever_obj).filter(reciever_of_msg=user)
@@ -387,6 +386,13 @@ class getCatagoryMeditationCourses(views.APIView):
         user = request.user 
         my_query =  UserCatagories.objects.filter(user=user)
         serialized_data = UserCatagorySerializer(my_query, many=True).data
+        return Response(serialized_data, status.HTTP_200_OK)
+
+class get_profile_additional_data(views.APIView):
+    def get(self, request):
+        user = request.user 
+        my_query =  userAdditions.objects.filter(user=user)
+        serialized_data = userAdditionsSerializerProfileData(my_query, many=True).data
         return Response(serialized_data, status.HTTP_200_OK)
 
 
