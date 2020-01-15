@@ -428,6 +428,9 @@ class sign_up_additional_data(views.APIView):
         this_user_additions.last_name = firstName_lastName['last_name']
         this_user_additions.save()
 
+        #automativally create a fitness goal set to 10000 steps
+        FitnessGoals.objects.create(user=user)
+
         if this_user_additions:
             return Response('first name last name added',status.HTTP_201_CREATED)
         else:
