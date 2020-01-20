@@ -477,6 +477,7 @@ class ResetPassWord(views.APIView):
                 email_sent = True
                 return Response('email sent',status.HTTP_201_CREATED)
             else:
+                None 
         
         if email_sent:
             None
