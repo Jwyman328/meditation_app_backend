@@ -466,11 +466,25 @@ class ResetPassWord(views.APIView):
 
         #user = userAdditions.objects.filter(email=email)
         #user = user[0]
-       
+        # only send emails to current users email 
         msg = 'Click to start reset password process http://intense-gorge-29567.herokuapp.com/accounts/password_reset/' #+ new_password
+
+        all_users= User.objects.all()
+        email_sent = False
+        for user in all_users:
+            if email == user.email:
+                send_mail('New password Meditation App', msg, 'MeditationApp@dev.com', [email], fail_silently=False)
+                email_sent = True
+                return Response('email sent',status.HTTP_201_CREATED)
+            else:
         
-        send_mail('New password Meditation App', msg, 'MeditationApp@dev.com', [email], fail_silently=False)
-        return Response('hi',status.HTTP_201_CREATED)
+        if email_sent:
+            None
+        else:
+            return Response('email does not exist',status.HTTP_404_NOT_FOUND)
+
+
+
 
 
 
