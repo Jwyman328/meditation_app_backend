@@ -26,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'wdl4j531t3*oc!ho(qy+22iurc*912ygxpdv(o*8l*8+frztf*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -158,13 +158,6 @@ USE_TZ = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-EMAIL_HOST = 'smtp.sendgrid.net'
-#EMAIL_HOST_USER = 'postmaster@sandbox9bb3ed733d874a598c4b6508265726ef.mailgun.org'
-#EMAIL_HOST_PASSWORD = '47556917b5d7772b89a3cd4bdfb0e5a4-713d4f73-8e44839d'
-EMAIL_HOST_USER = 'jwyman328'
-EMAIL_HOST_PASSWORD = 'braves328'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
 
 
 
