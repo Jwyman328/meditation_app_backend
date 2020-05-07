@@ -21,16 +21,18 @@ class userJournalMoodSerializer(serializers.ModelSerializer):
 
             all_moods = [] # week
             all_moods_month = []
+            all_obj_moods = []
 
             for obj in userJournals:
                 all_moods.append(obj.mood)
+                all_obj_moods.append(obj)
             
             for obj in userJournals_month:
                 all_moods_month.append(obj.mood)
 
             
 
-            return [all_moods,all_moods_month, [today,last_week,last_month ],userJournals, userJournals_month ]
+            return [all_moods,all_moods_month, [today,last_week,last_month ],all_obj_moods ]
 
     class Meta:
         model = JournalEntry
