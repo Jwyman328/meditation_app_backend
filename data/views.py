@@ -630,14 +630,14 @@ class ResetPassWord(views.APIView):
 
 class RecordMeditationListened(views.APIView):
 
-    def get(self, request):
+    def post(self, request):
         meditation_data = request.data
         date_time_listened = meditation_data["date_time_listened"]
         meditation_name = meditation_data["meditation_name"] 
         meditation_amount_time_listened = meditation_data["meditation_amount_time_listened"]
 
         newMeditationListenResults = MeditationListenResults.objects.create(meditation_amount_time_listened=meditation_amount_time_listened,
-        meditation_name=meditation_name, date_time_listened=date_time_listened
+        meditation_name=meditation_name
         )
         newMeditationListenResults.save()
 
