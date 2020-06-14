@@ -637,7 +637,7 @@ class RecordMeditationListened(views.APIView):
         meditation_amount_time_listened = meditation_data["meditation_amount_time_listened"]
 
         newMeditationListenResults = MeditationListenResults.objects.create(meditation_amount_time_listened=meditation_amount_time_listened,
-        meditation_name=meditation_name, date_time_listened=date_time_listened, meditation_data=meditation_data
+        meditation_name=meditation_name, date_time_listened=date_time_listened
         )
         newMeditationListenResults.save()
 
