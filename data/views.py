@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import views
 from rest_framework.response import Response
-from .models import JournalEntry, FitnessGoals, MyFeelings, DirectMessage, FriendRequest, userAdditions, MeditationCourse, AudioMeditation, UserCatagories, MeditationCatagoryType
+from .models import JournalEntry, FitnessGoals, MyFeelings, DirectMessage, FriendRequest, userAdditions, MeditationCourse, AudioMeditation, UserCatagories, MeditationCatagoryType, MeditationListenResults
 from django.contrib.auth.models import User
 
 from .serializers import userAdditionsSerializerProfileData, userJournalMoodSerializer, userJournalSerializer, FitnessGoalsSerializer, MyFeelingsSerializer, DirectMessageSerializer, friendRequestSerializer, userAdditionsSerializer, UserSerializer, MeditationCourseSerializer, AudioMeditationSerializer, UserCatagorySerializer, sign_up_serializer
@@ -627,3 +627,19 @@ class ResetPassWord(views.APIView):
             None
         else:
             return Response('email does not exist', status.HTTP_404_NOT_FOUND)
+
+class RecordMeditationListened(views.APIView):
+
+    def post(self, request):
+        meditation_data = request.data
+        date_time_listened = meditation_data["date_time_listened"]
+        meditation_name = meditation_data["meditation_name"] 
+        meditation_amount_time_listened = meditation_data["meditation_amount_time_listened"]
+
+        newMeditationListenResults = MeditationListenResults.objects.create(meditation_amount_time_listened=meditation_amount_time_listened,
+        meditation_name=meditation_name, date_time_listened=date_time_listened, meditation_data=meditation_data
+        )
+        newMeditationListenResults.save()
+
+
+

@@ -129,6 +129,11 @@ class AudioMeditation(models.Model):
         return self.title
 
     
+class MeditationListenResults(models.Model):
+    date_time_listened = models.DateTimeField(auto_now=True)
+    meditation_name = models.CharField(max_length=150)
+    meditation_amount_time_listened = models.PositiveIntegerField(default=1) #time in seconds
+
 
 
     
