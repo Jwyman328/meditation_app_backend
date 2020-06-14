@@ -630,7 +630,7 @@ class ResetPassWord(views.APIView):
 
 class RecordMeditationListened(views.APIView):
 
-    def post(self, request):
+    def get(self, request):
         meditation_data = request.data
         date_time_listened = meditation_data["date_time_listened"]
         meditation_name = meditation_data["meditation_name"] 
@@ -640,6 +640,9 @@ class RecordMeditationListened(views.APIView):
         meditation_name=meditation_name, date_time_listened=date_time_listened
         )
         newMeditationListenResults.save()
+
+        return Response('Journal created', status.HTTP_201_CREATED)
+
 
 
 
