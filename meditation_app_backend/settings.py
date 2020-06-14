@@ -141,8 +141,8 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:8080',
     'http://localhost:19002',
     'http://localhost:19000',
-    'http://localhost:4200/',
-    'https://reverent-jepsen-7d1dce.netlify.app/'
+    'http://localhost:4200',
+    'https://reverent-jepsen-7d1dce.netlify.app'
 
 ]
 # Internationalization
