@@ -640,7 +640,7 @@ class RecordMeditationListened(views.APIView):
         )
         newMeditationListenResults.save()
 
-        return Response('Journal created', status.HTTP_201_CREATED)
+        return Response('Meditation Recorded', status.HTTP_201_CREATED)
 
 
 
